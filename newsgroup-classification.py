@@ -78,7 +78,7 @@ def create_embedding_matrix(filepath, word_index, embedding_dim):
 # In[4]:
 
 
-data = create_input_dataframe('data/20_newsgroup/')
+data = create_input_dataframe('data/2_newsgroup/')
 print('input dataframe shape: ' + str(data.shape))
 data = data.sample(frac=1)
 data.head()
@@ -150,7 +150,7 @@ model.add(layers.Embedding(input_dim=vocab_size,
 model.add(layers.Conv1D(128, 5, activation='relu'))
 model.add(layers.GlobalMaxPool1D())
 model.add(layers.Dense(128, activation='relu'))
-model.add(layers.Dense(20, activation='softmax'))
+model.add(layers.Dense(2, activation='softmax'))
 
 
 # In[16]:
