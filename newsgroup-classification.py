@@ -8,19 +8,14 @@ import os
 import sys
 import numpy as np
 import pandas as pd
-# import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+# import matplotlib.pyplot as plt
 
 from keras.utils import to_categorical
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential
 from keras import layers
-
-# from keras.layers import Dense, Input, GlobalMaxPooling1D
-# from keras.layers import Conv1D, MaxPooling1D, Embedding
-# from keras.models import Model
-# from keras.initializers import Constant
 
 
 # In[2]:
@@ -78,7 +73,7 @@ def create_embedding_matrix(filepath, word_index, embedding_dim):
 # In[4]:
 
 
-data = create_input_dataframe('data/2_newsgroup/')
+data = create_input_dataframe('data/20_newsgroup/')
 print('input dataframe shape: ' + str(data.shape))
 data = data.sample(frac=1)
 data.head()
@@ -150,7 +145,7 @@ model.add(layers.Embedding(input_dim=vocab_size,
 model.add(layers.Conv1D(128, 5, activation='relu'))
 model.add(layers.GlobalMaxPool1D())
 model.add(layers.Dense(128, activation='relu'))
-model.add(layers.Dense(2, activation='softmax'))
+model.add(layers.Dense(20, activation='softmax'))
 
 
 # In[16]:
@@ -176,3 +171,13 @@ loss, accuracy = model.evaluate(X_train, y_train, verbose=False)
 print("Training Accuracy: {:.4f}".format(accuracy))
 loss, accuracy = model.evaluate(X_test, y_test, verbose=False)
 print("Testing Accuracy:  {:.4f}".format(accuracy))
+
+
+# save the models and weight for future purposes
+# serialize model to JSON
+model_json = model.to_json()
+with open("models/model.json", "w") as json_file:
+    json_file.write(model_json)
+# serialize weights to HDF5
+model.save_weights("models/model.h5")
+print("Saved model to disk")
