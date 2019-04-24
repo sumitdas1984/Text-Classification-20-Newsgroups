@@ -161,10 +161,10 @@ model.summary()
 
 
 history = model.fit(X_train, y_train,
-                    epochs=1,
+                    epochs=20,
                     verbose=True,
                     validation_data=(X_test, y_test),
-                    batch_size=10)
+                    batch_size=32)
 
 
 loss, accuracy = model.evaluate(X_train, y_train, verbose=False)
