@@ -134,19 +134,34 @@ print('vocab overlap: ' + str(overlap))
 
 
 model = Sequential()
+
+# # Architecture1
+# # embedding layer
+# model.add(layers.Embedding(input_dim=vocab_size,
+#                            output_dim=embedding_dim,
+#                            weights=[embedding_matrix],
+#                            input_length=maxlen,
+#                            trainable=True))
+# model.add(layers.Conv1D(128, 5, activation='relu'))
+# model.add(layers.GlobalMaxPool1D())
+# model.add(layers.Dense(128, activation='relu'))
+# # output layer
+# model.add(layers.Dense(20, activation='softmax'))
+
+# Architecture2
+# embedding layer
 model.add(layers.Embedding(input_dim=vocab_size,
                            output_dim=embedding_dim,
                            weights=[embedding_matrix],
                            input_length=maxlen,
                            trainable=True))
-# model.add(layers.Flatten())
-# model.add(layers.Dense(10, activation='relu'))
-# model.add(layers.Dense(1, activation='sigmoid'))
+model.add(layers.Conv1D(128, 5, activation='relu'))
+model.add(layers.MaxPooling1D(5))
 model.add(layers.Conv1D(128, 5, activation='relu'))
 model.add(layers.GlobalMaxPool1D())
 model.add(layers.Dense(128, activation='relu'))
+# output layer
 model.add(layers.Dense(20, activation='softmax'))
-
 
 # In[16]:
 
@@ -161,10 +176,10 @@ model.summary()
 
 
 history = model.fit(X_train, y_train,
-                    epochs=1,
+                    epochs=20,
                     verbose=True,
                     validation_data=(X_test, y_test),
-                    batch_size=10)
+                    batch_size=32)
 
 
 loss, accuracy = model.evaluate(X_train, y_train, verbose=False)
