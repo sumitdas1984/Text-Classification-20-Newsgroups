@@ -55,6 +55,6 @@ model.compile(optimizer='adam',
 ======================================================
 epochs = 20
 
-Training Accuracy: 0.9772
-Testing Accuracy:  0.7914
+Training Accuracy: 0.9766
+Testing Accuracy:  0.7880
 ======================================================
